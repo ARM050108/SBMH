@@ -1,6 +1,8 @@
 package web.spring.models;
 
 import jakarta.persistence.*;
+import jakarta.validation.constraints.Min;
+import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Size;
 import org.hibernate.validator.constraints.Email;
 import org.hibernate.validator.constraints.NotEmpty;
@@ -10,15 +12,16 @@ import org.hibernate.validator.constraints.NotEmpty;
 @Table(name = "users")
 public class User {
     @Id
-    @Column(name = "id")
     @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "id")
     private int id;
 
-    @NotEmpty(message = "Name is required")
-    @Size(min = 2, max = 40, message = "Name must be between 2 and 45 characters")
+    @Size(min = 2, max = 40, message = "Name must be between 2 and 40 characters")
     @Column(name = "name")
     private String name;
 
+    @NotNull(message = "Age is required")
+    @Min(value = 1, message = "Age must be a positive number")
     @Column(name = "age")
     private Integer age;
 
@@ -26,7 +29,6 @@ public class User {
     @Email(message = "Email is invalid")
     @Column(name = "email")
     private String email;
-
     public User() {
     }
 
@@ -55,8 +57,7 @@ public class User {
     public Integer getAge() {
         return age;
     }
-
-    public void setAge(int age) {
+    public void setAge(Integer age) {
         this.age = age;
     }
 
